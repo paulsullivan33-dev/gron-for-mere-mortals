@@ -1,0 +1,40 @@
+$ ./gron library.json | grep title
+json.catalogue[0].title = "The Clockwork Garden";
+json.catalogue[1].title = "A Field Guide to Clouds";
+json.catalogue[2].title = "Bread, Salt and Time";
+(exit 0)
+
+$ ./gron library.json | grep "on_loan = 2"
+json.catalogue[0].on_loan = 2;
+json.catalogue[1].on_loan = 2;
+(exit 0)
+
+$ ./gron library.json | grep author.name
+json.catalogue[0].author.name = "Elena Marsh";
+json.catalogue[1].author.name = "Tomas Reid";
+json.catalogue[2].author.name = "Priya Nair";
+(exit 0)
+
+$ ./gron library.json | grep -i cloud
+json.catalogue[1].title = "A Field Guide to Clouds";
+(exit 0)
+
+$ ./gron library.json | grep rating
+json.catalogue[0].rating = 4.5;
+json.catalogue[1].rating = null;
+(exit 0)
+
+$ ./gron library.json | grep "tags\[1\]"
+json.catalogue[0].tags[1] = "mystery";
+json.catalogue[1].tags[1] = "weather";
+(exit 0)
+
+$ ./gron library.json | grep -c "json.catalogue\["
+34
+(exit 0)
+
+$ ./gron library.json | grep null
+json.catalogue[1].rating = null;
+json.hours.sunday = null;
+(exit 0)
+

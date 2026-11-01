@@ -1,0 +1,39 @@
+$ jq .catalogue[1].title library.json
+"A Field Guide to Clouds"
+(exit 0)
+
+$ ./gron library.json | grep "catalogue\[1\].title" | ./gron --values
+A Field Guide to Clouds
+(exit 0)
+
+$ jq -r ".catalogue[] | select(.on_loan == .copies) | .title" library.json
+A Field Guide to Clouds
+(exit 0)
+
+$ ./gron library.json | grep -E "on_loan = 2" | ./gron -u | jq -r ".catalogue[] | select(.) | .id"
+null
+null
+(exit 0)
+
+$ jq -r ".catalogue[].author.name" library.json
+Elena Marsh
+Tomas Reid
+Priya Nair
+(exit 0)
+
+$ ./gron library.json | grep author.name | ./gron -v
+Elena Marsh
+Tomas Reid
+Priya Nair
+(exit 0)
+
+$ cat weather.jsonl | jq -s "map(.temp_c) | add / length"
+21.96666666666667
+(exit 0)
+
+$ ./gron --stream weather.jsonl | grep temp_c | ./gron -v
+21.4
+21.9
+22.6
+(exit 0)
+

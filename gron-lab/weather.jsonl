@@ -1,0 +1,3 @@
+{"station": "roof-north", "temp_c": 21.4, "rh": 43, "ok": true}
+{"station": "roof-north", "temp_c": 21.9, "rh": 44, "ok": true}
+{"station": "garden", "temp_c": 22.6, "rh": 47, "ok": false}

@@ -1,0 +1,130 @@
+$ cat library.json
+{
+  "library": "Riverside Public Library",
+  "branch": "Northgate",
+  "open": true,
+  "founded": 1962,
+  "catalogue": [
+    {
+      "id": "B-1001",
+      "title": "The Clockwork Garden",
+      "author": { "name": "Elena Marsh", "born": 1974 },
+      "tags": ["fiction", "mystery"],
+      "copies": 4,
+      "on_loan": 2,
+      "rating": 4.5
+    },
+    {
+      "id": "B-1002",
+      "title": "A Field Guide to Clouds",
+      "author": { "name": "Tomas Reid", "born": 1968 },
+      "tags": ["science", "weather"],
+      "copies": 2,
+      "on_loan": 2,
+      "rating": null
+    },
+    {
+      "id": "B-1003",
+      "title": "Bread, Salt and Time",
+      "author": { "name": "Priya Nair", "born": 1981 },
+      "tags": ["cooking"],
+      "copies": 6,
+      "on_loan": 0
+    }
+  ],
+  "hours": {
+    "weekday": "09:00-18:00",
+    "saturday": "10:00-14:00",
+    "sunday": null
+  },
+  "events": []
+}
+(exit 0)
+
+$ ./gron library.json
+json = {};
+json.branch = "Northgate";
+json.catalogue = [];
+json.catalogue[0] = {};
+json.catalogue[0].author = {};
+json.catalogue[0].author.born = 1974;
+json.catalogue[0].author.name = "Elena Marsh";
+json.catalogue[0].copies = 4;
+json.catalogue[0].id = "B-1001";
+json.catalogue[0].on_loan = 2;
+json.catalogue[0].rating = 4.5;
+json.catalogue[0].tags = [];
+json.catalogue[0].tags[0] = "fiction";
+json.catalogue[0].tags[1] = "mystery";
+json.catalogue[0].title = "The Clockwork Garden";
+json.catalogue[1] = {};
+json.catalogue[1].author = {};
+json.catalogue[1].author.born = 1968;
+json.catalogue[1].author.name = "Tomas Reid";
+json.catalogue[1].copies = 2;
+json.catalogue[1].id = "B-1002";
+json.catalogue[1].on_loan = 2;
+json.catalogue[1].rating = null;
+json.catalogue[1].tags = [];
+json.catalogue[1].tags[0] = "science";
+json.catalogue[1].tags[1] = "weather";
+json.catalogue[1].title = "A Field Guide to Clouds";
+json.catalogue[2] = {};
+json.catalogue[2].author = {};
+json.catalogue[2].author.born = 1981;
+json.catalogue[2].author.name = "Priya Nair";
+json.catalogue[2].copies = 6;
+json.catalogue[2].id = "B-1003";
+json.catalogue[2].on_loan = 0;
+json.catalogue[2].tags = [];
+json.catalogue[2].tags[0] = "cooking";
+json.catalogue[2].title = "Bread, Salt and Time";
+json.events = [];
+json.founded = 1962;
+json.hours = {};
+json.hours.saturday = "10:00-14:00";
+json.hours.sunday = null;
+json.hours.weekday = "09:00-18:00";
+json.library = "Riverside Public Library";
+json.open = true;
+(exit 0)
+
+$ ./gron library.json | head -8
+json = {};
+json.branch = "Northgate";
+json.catalogue = [];
+json.catalogue[0] = {};
+json.catalogue[0].author = {};
+json.catalogue[0].author.born = 1974;
+json.catalogue[0].author.name = "Elena Marsh";
+json.catalogue[0].copies = 4;
+(exit 0)
+
+$ ./gron library.json | wc -l
+45
+(exit 0)
+
+$ echo '{"a": {"b": [1, 2, {"c": null}]}}' | ./gron
+json = {};
+json.a = {};
+json.a.b = [];
+json.a.b[0] = 1;
+json.a.b[1] = 2;
+json.a.b[2] = {};
+json.a.b[2].c = null;
+(exit 0)
+
+$ echo '42' | ./gron
+json = 42;
+(exit 0)
+
+$ echo '"just a string"' | ./gron
+json = "just a string";
+(exit 0)
+
+$ echo '[true, false]' | ./gron
+json = [];
+json[0] = true;
+json[1] = false;
+(exit 0)
+

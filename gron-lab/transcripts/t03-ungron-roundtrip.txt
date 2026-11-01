@@ -1,0 +1,168 @@
+$ ./gron library.json | ./gron --ungron > rebuilt.json; cat rebuilt.json
+{
+  "branch": "Northgate",
+  "catalogue": [
+    {
+      "author": {
+        "born": 1974,
+        "name": "Elena Marsh"
+      },
+      "copies": 4,
+      "id": "B-1001",
+      "on_loan": 2,
+      "rating": 4.5,
+      "tags": [
+        "fiction",
+        "mystery"
+      ],
+      "title": "The Clockwork Garden"
+    },
+    {
+      "author": {
+        "born": 1968,
+        "name": "Tomas Reid"
+      },
+      "copies": 2,
+      "id": "B-1002",
+      "on_loan": 2,
+      "rating": null,
+      "tags": [
+        "science",
+        "weather"
+      ],
+      "title": "A Field Guide to Clouds"
+    },
+    {
+      "author": {
+        "born": 1981,
+        "name": "Priya Nair"
+      },
+      "copies": 6,
+      "id": "B-1003",
+      "on_loan": 0,
+      "tags": [
+        "cooking"
+      ],
+      "title": "Bread, Salt and Time"
+    }
+  ],
+  "events": [],
+  "founded": 1962,
+  "hours": {
+    "saturday": "10:00-14:00",
+    "sunday": null,
+    "weekday": "09:00-18:00"
+  },
+  "library": "Riverside Public Library",
+  "open": true
+}
+(exit 0)
+
+$ jq -S . library.json > canonical-a.json; jq -S . rebuilt.json > canonical-b.json; diff canonical-a.json canonical-b.json && echo ROUNDTRIP-SEMANTIC-IDENTICAL
+ROUNDTRIP-SEMANTIC-IDENTICAL
+(exit 0)
+
+$ sha256sum library.json rebuilt.json
+1f179fd9564bf1c5f37c4e99d539becdf322d9854187413fc72781d925dc5552  library.json
+abe82e60c95dece405fdcc98fae0b4f1e0a11ab114e39fc19c9478dfbe6be628  rebuilt.json
+(exit 0)
+
+$ ./gron library.json | grep catalogue | ./gron --ungron
+{
+  "catalogue": [
+    {
+      "author": {
+        "born": 1974,
+        "name": "Elena Marsh"
+      },
+      "copies": 4,
+      "id": "B-1001",
+      "on_loan": 2,
+      "rating": 4.5,
+      "tags": [
+        "fiction",
+        "mystery"
+      ],
+      "title": "The Clockwork Garden"
+    },
+    {
+      "author": {
+        "born": 1968,
+        "name": "Tomas Reid"
+      },
+      "copies": 2,
+      "id": "B-1002",
+      "on_loan": 2,
+      "rating": null,
+      "tags": [
+        "science",
+        "weather"
+      ],
+      "title": "A Field Guide to Clouds"
+    },
+    {
+      "author": {
+        "born": 1981,
+        "name": "Priya Nair"
+      },
+      "copies": 6,
+      "id": "B-1003",
+      "on_loan": 0,
+      "tags": [
+        "cooking"
+      ],
+      "title": "Bread, Salt and Time"
+    }
+  ]
+}
+(exit 0)
+
+$ ./gron library.json | grep "catalogue\[1\]" | ./gron -u
+{
+  "catalogue": [
+    null,
+    {
+      "author": {
+        "born": 1968,
+        "name": "Tomas Reid"
+      },
+      "copies": 2,
+      "id": "B-1002",
+      "on_loan": 2,
+      "rating": null,
+      "tags": [
+        "science",
+        "weather"
+      ],
+      "title": "A Field Guide to Clouds"
+    }
+  ]
+}
+(exit 0)
+
+$ ./gron library.json | grep title | ./gron -u
+{
+  "catalogue": [
+    {
+      "title": "The Clockwork Garden"
+    },
+    {
+      "title": "A Field Guide to Clouds"
+    },
+    {
+      "title": "Bread, Salt and Time"
+    }
+  ]
+}
+(exit 0)
+
+$ ./gron library.json | grep title | ./gron --values
+The Clockwork Garden
+A Field Guide to Clouds
+Bread, Salt and Time
+(exit 0)
+
+$ ./gron library.json | ./gron -u | jq .catalogue[2].title
+"Bread, Salt and Time"
+(exit 0)
+

@@ -1,0 +1,20 @@
+$ printf 'data.x = 1;\ndata.y = 2;\n' | ./gron -u
+{
+  "data": {
+    "x": 1,
+    "y": 2
+  }
+}
+(exit 0)
+
+$ printf 'json.x = 1;\nother.y = 2;\n' | ./gron -u
+{
+  "json": {
+    "x": 1
+  },
+  "other": {
+    "y": 2
+  }
+}
+(exit 0)
+

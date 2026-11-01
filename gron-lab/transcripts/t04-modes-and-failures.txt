@@ -1,0 +1,88 @@
+$ ./gron --json library.json | head -6
+[[],{}]
+[["branch"],"Northgate"]
+[["catalogue"],[]]
+[["catalogue",0],{}]
+[["catalogue",0,"author"],{}]
+[["catalogue",0,"author","born"],1974]
+(exit 0)
+
+$ ./gron --json library.json | ./gron -u -j | head -4
+{
+  "branch": "Northgate",
+  "catalogue": [
+    {
+(exit 0)
+
+$ ./gron --stream weather.jsonl
+json = [];
+json[0] = {};
+json[0].ok = true;
+json[0].rh = 43;
+json[0].station = "roof-north";
+json[0].temp_c = 21.4;
+json[1] = {};
+json[1].ok = true;
+json[1].rh = 44;
+json[1].station = "roof-north";
+json[1].temp_c = 21.9;
+json[2] = {};
+json[2].ok = false;
+json[2].rh = 47;
+json[2].station = "garden";
+json[2].temp_c = 22.6;
+(exit 0)
+
+$ ./gron --json --stream weather.jsonl | head -5
+[[],[]]
+[[0],{}]
+[[0,"ok"],true]
+[[0,"rh"],43]
+[[0,"station"],"roof-north"]
+(exit 0)
+
+$ ./gron weather.jsonl
+json = {};
+json.ok = true;
+json.rh = 43;
+json.station = "roof-north";
+json.temp_c = 21.4;
+(exit 0)
+
+$ echo '{"temp_c": 21.4' | ./gron
+failed to form statements: unexpected EOF
+(exit 3)
+
+$ echo 'not json at all' | ./gron
+failed to form statements: invalid character 'o' in literal null (expecting 'u')
+(exit 3)
+
+$ ./gron missing-file.json
+open missing-file.json: no such file or directory
+(exit 1)
+
+$ printf '' | ./gron
+failed to form statements: EOF
+(exit 3)
+
+$ echo 'null' | ./gron
+json = null;
+(exit 0)
+
+$ echo '{"a":}' | ./gron -u
+ungron failed for ``: invalid statement
+(exit 5)
+
+$ echo 'json.x = ;' | ./gron -u
+ungron failed for `json.x = ;`: invalid value ``
+(exit 5)
+
+$ ./gron --no-sort library.json | head -6
+json = {};
+json.hours = {};
+json.hours.weekday = "09:00-18:00";
+json.hours.saturday = "10:00-14:00";
+json.hours.sunday = null;
+json.events = [];
+(exit 0)
+

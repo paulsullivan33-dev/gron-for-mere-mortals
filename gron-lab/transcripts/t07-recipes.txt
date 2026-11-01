@@ -1,0 +1,37 @@
+$ ./gron library.json | wc -l
+45
+(exit 0)
+
+$ ./gron library.json | grep -c " = \[\];"
+5
+(exit 0)
+
+$ ./gron library.json | grep -c "null;"
+2
+(exit 0)
+
+$ ./gron library.json | cut -d. -f2 | sort | uniq -c | sort -rn | head
+     11 catalogue[1]
+     11 catalogue[0]
+      9 catalogue[2]
+      3 hours
+      1 open = true;
+      1 library = "Riverside Public Library";
+      1 json = {};
+      1 hours = {};
+      1 founded = 1962;
+      1 events = [];
+(exit 0)
+
+$ ./gron library.json | grep -v "\.rating =" | ./gron -u > clean.json; ./gron clean.json | grep -c rating; jq -e ".catalogue[1] | has(\"rating\") | not" clean.json
+0
+true
+(exit 0)
+
+$ ./gron library.json | sed "s/json.branch = \"Northgate\"/json.branch = \"Southgate\"/" | ./gron -u > moved.json; diff <(./gron library.json) <(./gron moved.json)
+2c2
+< json.branch = "Northgate";
+---
+> json.branch = "Southgate";
+(exit 1)
+

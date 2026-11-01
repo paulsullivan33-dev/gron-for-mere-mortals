@@ -1,0 +1,40 @@
+{
+  "library": "Riverside Public Library",
+  "branch": "Northgate",
+  "open": true,
+  "founded": 1962,
+  "catalogue": [
+    {
+      "id": "B-1001",
+      "title": "The Clockwork Garden",
+      "author": { "name": "Elena Marsh", "born": 1974 },
+      "tags": ["fiction", "mystery"],
+      "copies": 4,
+      "on_loan": 2,
+      "rating": 4.5
+    },
+    {
+      "id": "B-1002",
+      "title": "A Field Guide to Clouds",
+      "author": { "name": "Tomas Reid", "born": 1968 },
+      "tags": ["science", "weather"],
+      "copies": 2,
+      "on_loan": 2,
+      "rating": null
+    },
+    {
+      "id": "B-1003",
+      "title": "Bread, Salt and Time",
+      "author": { "name": "Priya Nair", "born": 1981 },
+      "tags": ["cooking"],
+      "copies": 6,
+      "on_loan": 0
+    }
+  ],
+  "hours": {
+    "weekday": "09:00-18:00",
+    "saturday": "10:00-14:00",
+    "sunday": null
+  },
+  "events": []
+}

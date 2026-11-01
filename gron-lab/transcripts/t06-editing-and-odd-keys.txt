@@ -1,0 +1,39 @@
+$ ./gron library.json | sed "s/json.branch = \"Northgate\"/json.branch = \"Southgate\"/" | ./gron -u | jq .branch
+"Southgate"
+(exit 0)
+
+$ ./gron library.json | grep -v "rating" | ./gron -u | jq ".catalogue[0] | has(\"rating\")"
+false
+(exit 0)
+
+$ ./gron library.json | grep -v "events" | ./gron -u | jq "has(\"events\")"
+false
+(exit 0)
+
+$ echo '{"opening hours": "9 to 5", "a.b": 1, "café": true, "123": "numeric key"}' | ./gron
+json = {};
+json.café = true;
+json["123"] = "numeric key";
+json["a.b"] = 1;
+json["opening hours"] = "9 to 5";
+(exit 0)
+
+$ echo '{"opening hours": "9 to 5", "a.b": 1}' | ./gron | grep "a.b" | ./gron -u
+{
+  "a.b": 1
+}
+(exit 0)
+
+$ printf 'json.added = "by hand";\n' | ./gron -u
+{
+  "added": "by hand"
+}
+(exit 0)
+
+$ ./gron library.json | sed "s/json.founded = 1962;/json.founded = 1962;\njson.renovated = 2019;/" | ./gron -u | jq "{founded, renovated}"
+{
+  "founded": 1962,
+  "renovated": 2019
+}
+(exit 0)
+

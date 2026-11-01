@@ -1,0 +1,27 @@
+site_name: Gron for Mere Mortals
+site_description: A small tool that flattens JSON into one statement per value so the text tools you already know (grep, sed, sort) can search and edit it, and then rebuilds the JSON from the statements you kept, with the round trip proved and the limits stated plainly.
+site_url: https://paulsullivan33-dev.github.io/gron-for-mere-mortals/
+copyright: 'Part of <a href="https://paulsullivan33-dev.github.io/mere-mortals/">For Mere Mortals</a> · Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code MIT'
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What Gron Is: what-gron-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Installing Gron: installing-gron.md
+  - Your First Flattening: your-first-flattening.md
+  - Grepping JSON: grepping-json.md
+  - Ungron — The Way Back: ungron-the-way-back.md
+  - Editing JSON with Text Tools: editing-with-text-tools.md
+  - The Other Modes — Stream, JSON and Values: the-other-modes.md
+  - Gron and jq: gron-and-jq.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md
